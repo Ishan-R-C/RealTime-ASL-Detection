@@ -80,7 +80,7 @@ def preprocess_hand(crop):
     reshaped = normalized.reshape(1, 128, 128, 1)
     return reshaped
 
-#Crops out the hand from the image
+#crops out the hand from the image
 def get_square_box(landmarks, shape, padding=20):
     h, w, _ = shape
     x_coords = [int(lm.x * w) for lm in landmarks]
@@ -136,9 +136,9 @@ while True:
                     predicted_class = cl_nm[co_idx]
                 prediction_buffer.append(predicted_class)
 
-                #remove batch and channel dimensions, scale to 0-255, convert to uint8
-                display_img = (input_img[0] * 255).astype(np.uint8) 
-                cv2.imshow("Cropped Hand", display_img) #optional to see what the model is seeing
+                #optional to see what the model is seeing
+                display_img = (input_img[0] * 255).astype(np.uint8) #removes batch and channel dimensions, scale to 0-255, convert to uint8
+                cv2.imshow("Cropped Hand", display_img) 
 
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
                 cv2.putText(frame, f"{predicted_class} ({confidence*100:.1f}%)",
@@ -149,7 +149,7 @@ while True:
 
     if len(prediction_buffer) == 10:
         most_common, count = Counter(prediction_buffer).most_common(1)[0]
-        if count > 7:  # Add a stability threshold
+        if count > 7:  #adds a stability threshold
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
             if most_common == "Space":
                 words = final_text.strip().split()
@@ -161,8 +161,8 @@ while True:
                 final_text = final_text[:-1]
             else:
                 final_text += most_common
-            prediction_buffer.clear()  # Reset buffer to avoid repeated addition
-    cv2.putText(frame, f"Text: {final_text}", (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 0), 5, cv2.LINE_AA)  # thicker black outline
+            prediction_buffer.clear()  #resets buffer to avoid repeated addition
+    cv2.putText(frame, f"Text: {final_text}", (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 0), 5, cv2.LINE_AA)  #thicker black outline
     cv2.putText(frame, f"Text: {final_text}", (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 255, 255), 2, cv2.LINE_AA)
 
     with open("asl_output.txt", "w", encoding="utf-8") as f:
@@ -174,5 +174,5 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-tts_queue.put(None)  # Signal the TTS thread to exit
-tts_thread.join()    # Wait for it to finish
+tts_queue.put(None)  #signals the TTS thread to exit
+tts_thread.join()    
