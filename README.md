@@ -15,7 +15,7 @@ https://github.com/user-attachments/assets/7413c7d1-2ed1-41cb-a232-ed56964f4aa6
 
 ## Files
 - **createfolders.py** can be used to form a 'dataset' folder structure with subfolders for each alphabet (as well as 'Space' and 'Delete').
-- **capture.py** can be used to capture cropped images of your hand to form a dataset for model training (I used 160 per sign).
+- **capture.py** can be used to capture cropped images of your hand to form a dataset for model training (I used 160 per sign). Can be used to make personalized signs as well.
 - **preprocessing.py** converts the images in dataset from RGB to grayscale images through thresholding and noise reduction to make model training simpler.
   The processed images are stored in a 'processed' folder by the script and these are used for model training.
   
